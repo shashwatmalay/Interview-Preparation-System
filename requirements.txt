@@ -8,7 +8,7 @@ langchain-anthropic
 langchain-groq
 langchain_ollama
 pypdf
-docx
+python-docx
 pillow
 google-genai
 langchain-google-genai
@@ -19,6 +19,9 @@ python-dotenv
 sqlalchemy 
 chromadb 
 sentence-transformers
+fastapi
+uvicorn
+python-multipart
 
 
 

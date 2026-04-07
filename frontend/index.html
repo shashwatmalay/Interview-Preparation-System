@@ -1,0 +1,1047 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Interview Preparation System</title>
+  <link rel="icon" href="/imgvid/favicon001.ico" type="image/x-icon">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Fauna+One&display=swap');
+    :root {
+      --bg: #ffffff;
+      --surface: #ffffff;
+      --surface-2: #f7f3ff;
+      --text: #1f1b2d;
+      --muted: #6b6480;
+      --primary: #a435f0;
+      --primary-dark: #7f22ce;
+      --accent: #5624d0;
+      --border: #e9e2fb;
+      --shadow: 0 12px 32px rgba(24, 16, 45, 0.08);
+      --shadow-hover: 0 18px 36px rgba(86, 36, 208, 0.18);
+      --ok: #0f9d58;
+      --warn: #b45309;
+      --err: #b91c1c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Fauna One", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      color: var(--text);
+      background: transparent;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .container { width: min(1180px, 92%); margin: 0 auto; position: relative; z-index: 1; }
+
+    .grain { display: none; }
+
+    header {
+      position: sticky; top: 12px; margin-top: 18px; z-index: 20;
+      display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px;
+      padding: 8px 14px; border: 1px solid var(--border); border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(8px); box-shadow: var(--shadow);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; justify-content: flex-start; }
+
+    .logo-placeholder {
+      width: clamp(260px, 42vw, 420px);
+      height: auto;
+      max-height: 74px;
+      padding: 4px 6px;
+      border: none;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: transparent;
+      flex-shrink: 0;
+      overflow: visible;
+    }
+
+    .logo-placeholder img {
+      width: 100%;
+      height: auto;
+      max-height: 66px;
+      object-fit: contain;
+      display: block;
+    }
+    h1, h2, h3, h4, h5, .upload-title { font-family: "Cinzel", serif; letter-spacing: 0.2px; }
+
+    nav { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; justify-self: center; }
+
+    .header-actions { display: flex; align-items: center; justify-content: flex-end; }
+    .website-btn {
+      background: #fff;
+      border-color: #f3b7d7;
+      color: #4b4562;
+    }
+    .website-btn:hover {
+      background: #ffd7ea;
+      border-color: #f7a8cf;
+      color: #3a2e61;
+      box-shadow: 0 10px 20px rgba(247, 168, 207, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .btn, .btn-outline, .nav-link, .mini-btn {
+      border: 1px solid transparent; text-decoration: none; border-radius: 999px;
+      padding: 8px 14px; font-size: 0.86rem; font-weight: 500;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease, color 0.28s ease, border-color 0.28s ease;
+      display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+
+    .nav-link { color: #4b4562; background: #fff; border-color: var(--border); }
+    .nav-link:hover { transform: translateY(-2px); color: var(--accent); border-color: #c9b6f6; box-shadow: 0 8px 18px rgba(86, 36, 208, 0.14); }
+
+    .btn { color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); box-shadow: 0 10px 22px rgba(127, 34, 206, 0.32); }
+    .btn:hover { transform: translateY(-3px) scale(1.01); box-shadow: var(--shadow-hover); filter: saturate(1.1); }
+
+    .btn-outline { color: var(--accent); background: #fff; border-color: #ccbdfa; }
+    .btn-outline:hover { transform: translateY(-3px); background: #f7f2ff; box-shadow: 0 10px 20px rgba(86, 36, 208, 0.15); border-color: #b79af6; }
+
+    section { margin-top: 26px; }
+
+ .hero, .block {
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: clamp(22px, 3.8vw, 36px);
+  position: relative;
+  overflow: hidden;
+  background: transparent; 
+}
+
+    .hero {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; overflow: hidden; position: relative;
+    }
+
+    #company {
+      scroll-margin-top: 120px;
+    }
+
+    .hero > :not(.hero-video) {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      filter: saturate(1.08) contrast(1.08);
+    }
+
+    .hero::before {
+      content: ""; position: absolute; width: 320px; height: 320px; border-radius: 50%;
+      right: -120px; top: -140px; background: radial-gradient(circle, rgba(164, 53, 240, 0.18), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after { display: none; }
+
+    .hero-content {
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 18px;
+      padding: 16px 18px;
+      box-shadow: 0 14px 28px rgba(20, 14, 43, 0.12);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero h2 { font-size: clamp(1.9rem, 4.3vw, 3rem); line-height: 1.14; letter-spacing: -0.4px; margin-bottom: 14px; font-weight: 600; max-width: 16ch; color: #000000; text-shadow: 0 1px 2px rgba(255,255,255,0.6); }
+    .hero h2 span { color: var(--accent); font-weight: 700; }
+    .hero p { color: #000000; font-size: 1rem; max-width: 62ch; font-weight: 600; text-shadow: 0 1px 2px rgba(255,255,255,0.6); }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 20px; }
+
+    .hero-cta .btn,
+    .hero-cta .btn-outline {
+      animation: dropIn 0.7s ease both;
+    }
+
+    .hero-cta .btn-outline { animation-delay: 0.12s; }
+
+    @keyframes dropIn {
+      0% { transform: translateY(18px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .logo-strip {
+      margin-top: 26px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 22px rgba(20, 14, 43, 0.1);
+      overflow: hidden;
+      position: relative;
+      padding: 10px 0;
+    }
+
+    .logo-strip::before,
+    .logo-strip::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 90px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .logo-strip::before {
+      left: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+    }
+
+    .logo-strip::after {
+      right: 0;
+      background: linear-gradient(270deg, rgba(255,255,255,0.85), rgba(255,255,255,0));
+    }
+
+    .logo-track {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      width: max-content;
+      animation: logoMarquee 22s linear infinite;
+      padding: 0 26px;
+    }
+
+    .logo-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2f2550;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.6);
+      white-space: nowrap;
+    }
+
+    .logo-item img {
+      height: 18px;
+      width: auto;
+      display: block;
+    }
+
+    @keyframes logoMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .hero-side { display: grid; gap: 12px; align-content: start; }
+    .stat {
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(6px);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .stat:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(127, 34, 206, 0.14); }
+    .stat strong { display: block; font-size: 1.2rem; font-weight: 700; color: #231a3d; margin-bottom: 4px; }
+    .stat small { color: #3b3158; font-weight: 500; }
+
+    .agent-pop {
+      opacity: 0;
+      transform: translateY(-24px) scale(0.98);
+      transition: opacity .45s ease, transform .45s ease;
+    }
+
+    .agent-pop.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .video-note {
+      font-size: 0.78rem;
+      color: #3d3458;
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(60, 48, 100, 0.2);
+      border-radius: 8px;
+      padding: 7px 10px;
+      display: none;
+    }
+
+    .block::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(249,247,255,.22));
+      opacity: 0.7;
+    }
+
+    #backend.block {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    #backend.block::before {
+      display: block;
+    }
+
+    #company.block {
+      background: url('./imgvid/pexels-doan-thanh-binh-2147604563-36631703 (1).jpg') center/cover no-repeat;
+    }
+
+    #company.block::before {
+      display: none !important;
+    }
+
+    #company h3 {
+      color: #000000;
+    }
+
+    #company .sub,
+    #company .company-copy h4,
+    #company .company-copy p {
+      color: #ffffff;
+    }
+
+
+    
+    .block h3 { font-size: clamp(1.4rem, 2.2vw, 1.9rem); margin-bottom: 8px; font-weight: 600; color: #ffffff; }
+    .block .sub { color: #ffffff; margin-bottom: 18px; font-size: 0.96rem; }
+
+    .backend-layout { display: grid; grid-template-columns: 1fr; gap: 16px; }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 16px 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(252,251,255,0.9));
+    }
+
+    .panel h4 { font-size: 1rem; font-weight: 600; margin: 0 0 8px; color: #2f2550; }
+    .panel p { font-size: 0.9rem; color: #6b6480; margin-bottom: 8px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .field { display: grid; gap: 5px; }
+    .field.full { grid-column: 1 / -1; }
+
+    label { font-size: 0.82rem; color: #5f5778; font-weight: 500; }
+
+    input[type="text"], input[type="email"], select, textarea {
+      border: 1px solid #ddd3fb;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      color: #2b2541;
+      background: #fff;
+      outline: none;
+      transition: border-color .22s ease, box-shadow .22s ease;
+      width: 100%;
+    }
+
+    .file-input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+    }
+
+    .upload-box {
+      border: 2px dashed #c9b6f6;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(247,243,255,0.95));
+      min-height: 112px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease, background .3s ease;
+    }
+
+    .upload-box:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 14px 28px rgba(86, 36, 208, 0.18);
+      border-color: #9f77f2;
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(241,233,255,0.98));
+    }
+
+    .upload-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #3d2f63;
+    }
+
+    .upload-sub {
+      font-size: 0.8rem;
+      color: #71688b;
+      font-weight: 400;
+      word-break: break-word;
+    }
+    .upload-sub.uploaded {
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    textarea { min-height: 88px; resize: vertical; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #b99cf7;
+      box-shadow: 0 0 0 3px rgba(164,53,240,0.12);
+    }
+
+    .check-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px;
+      color: #5f5778;
+      font-size: 0.86rem;
+    }
+
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+    .result-box {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .status {
+      font-size: 0.86rem;
+      font-weight: 500;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #ece6ff;
+      background: #faf8ff;
+      color: #4e4470;
+    }
+
+    .status.ok { color: var(--ok); border-color: #b9ebd0; background: #effaf4; }
+    .status.warn { color: var(--warn); border-color: #fed7aa; background: #fff7ed; }
+    .status.err { color: var(--err); border-color: #fecaca; background: #fff1f2; }
+
+    .kv { display: grid; grid-template-columns: 130px 1fr; gap: 6px; font-size: 0.86rem; color: #5d5578; }
+    .kv b { color: #362c56; }
+
+    .links { display: grid; gap: 6px; }
+
+    .links a {
+      color: #5b2dc8;
+      text-decoration: none;
+      font-size: 0.86rem;
+      word-break: break-all;
+    }
+
+    .links a:hover { text-decoration: underline; }
+
+    .helper-note {
+      font-size: 0.8rem;
+      color: #71698a;
+      margin-top: 2px;
+    }
+
+    .company-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .company-copy {
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 14px;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 22px rgba(20, 14, 43, 0.1);
+    }
+
+    .company-copy h4 { font-size: 1.08rem; margin-bottom: 8px; font-weight: 600; color: #2f2550; }
+    .company-copy p { color: #000000; font-size: 0.94rem; line-height: 1.62; margin-bottom: 10px; }
+
+    .slideshow {
+      position: relative; min-height: 330px; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border); box-shadow: 0 14px 28px rgba(20, 14, 43, 0.14); background: #ddd;
+    }
+
+    .slide {
+      position: absolute; inset: 0; opacity: 0; transition: opacity .65s ease, transform .65s ease;
+      transform: scale(1.03); background-size: cover; background-position: center;
+      display: flex; align-items: flex-end; justify-content: flex-start;
+    }
+
+    .slide::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(22,14,41,0.12), rgba(20,14,40,0.78));
+    }
+
+    .slide.active { opacity: 1; transform: scale(1); z-index: 1; }
+
+    .slide.one { background-image: linear-gradient(130deg, rgba(18, 132, 92, .28), rgba(18, 40, 30, .32)), url('imgvid/WhatsApp Image 2026-04-07 at 11.21.15 AM.jpeg'); }
+    .slide.two { background-image: linear-gradient(130deg, rgba(86,36,208,.28), rgba(30,20,51,.22)), url('imgvid/pexels-suits-coworking-spaces-2155871965-33935830.jpg'); }
+    .slide.three { background-image: linear-gradient(130deg, rgba(127,34,206,.3), rgba(30,20,51,.2)), url('imgvid/image.png'); }
+
+    .slide-content { position: relative; z-index: 1; width: 100%; padding: 18px; color: #f5f2ff; }
+    .slide-content h5 { font-size: 1.02rem; font-weight: 600; margin-bottom: 5px; }
+    .slide-content p { font-size: 0.86rem; color: #e7ddff; font-weight: 350; line-height: 1.55; max-width: 55ch; }
+
+    .slide-controls { position: absolute; top: 14px; right: 14px; z-index: 2; display: flex; gap: 8px; }
+
+    .mini-btn {
+      border: 1px solid rgba(255,255,255,0.4); border-radius: 999px; background: rgba(255,255,255,0.17);
+      color: #fff; font-size: 0.77rem; padding: 6px 10px; backdrop-filter: blur(4px);
+    }
+
+    .mini-btn:hover { transform: translateY(-2px); background: rgba(164,53,240,0.55); border-color: rgba(255,255,255,0.75); box-shadow: 0 10px 20px rgba(23, 14, 44, 0.35); }
+
+    .dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; gap: 8px; }
+    .dots button { width: 9px; height: 9px; border-radius: 999px; border: none; background: rgba(255,255,255,0.5); cursor: pointer; transition: all .25s ease; }
+    .dots button.active { width: 24px; background: #fff; }
+
+    footer { margin: 30px 0 18px; text-align: center; color: #7c7691; font-size: 0.86rem; padding: 14px 0 6px; }
+
+    .block > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+      opacity: 0.35;
+      filter: saturate(1.05) contrast(1.05);
+    }
+
+    #company .section-video {
+      opacity: 1;
+      filter: none;
+    }
+
+    #backend .section-video {
+      opacity: 1;
+      filter: none;
+    }
+
+    .company-link {
+      color: #4b4562;
+      border-color: var(--border);
+      background: #fff;
+    }
+    .company-link:hover {
+      color: var(--primary);
+      border-color: #d7b9fb;
+      background: #fff7ff;
+      box-shadow: 0 10px 20px rgba(164, 53, 240, 0.18);
+    }
+
+    .trustpilot-btn {
+      position: relative;
+      overflow: hidden;
+      margin-left: auto;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border-color: transparent;
+      box-shadow: 0 10px 22px rgba(127, 34, 206, 0.32);
+    }
+    .trustpilot-btn::before {
+      content: "\2605";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 2.1rem;
+      color: rgba(255, 255, 255, 0.25);
+      transform: rotate(-8deg);
+      pointer-events: none;
+    }
+    .trustpilot-btn:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 10px 22px rgba(127, 34, 206, 0.32);
+      filter: none;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    .page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(7px);
+      background: rgba(247, 243, 255, 0.35);
+    }
+
+    .page-loader.active {
+      display: flex;
+    }
+
+    .rrt-wave {
+      display: flex;
+      gap: 8px;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 700;
+      color: #3f1e7d;
+      text-shadow: 0 10px 25px rgba(86,36,208,0.3);
+      letter-spacing: 3px;
+    }
+
+    .rrt-wave span {
+      display: inline-block;
+      animation: wave 1s ease-in-out infinite;
+    }
+
+    .rrt-wave span:nth-child(2) { animation-delay: 0.15s; }
+    .rrt-wave span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes wave {
+      0%, 100% { transform: translateY(0); opacity: 0.8; }
+      50% { transform: translateY(-14px); opacity: 1; }
+    }
+
+    @media (max-width: 1040px) {
+      .hero, .backend-layout, .company-layout { grid-template-columns: 1fr; }
+      .hero h2 { max-width: 100%; }
+    }
+
+    @media (max-width: 760px) {
+      header { border-radius: 20px; padding: 12px; flex-direction: column; align-items: flex-start; }
+      nav { width: 100%; }
+      .nav-link, .btn-outline { flex: 1; text-align: center; }
+      .hero, .block { padding: 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .trustpilot-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="page-loader" id="pageLoader" aria-live="polite" aria-label="Workflow processing loader">
+    <div class="rrt-wave"><span>R</span><span>R</span><span>T</span></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo-placeholder">
+          <img src="imgvid/RRT LOGO _1-01.svg" alt="Recruit Riders Technologies Logo">
+        </div>
+      </div>
+
+      <nav>
+        <a class="nav-link" href="#intro">Intro</a>
+        <a class="nav-link" href="#backend">Top Questions</a>
+        <a class="nav-link company-link" href="#company">Company</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn-outline website-btn" href="https://www.recruitriders.com/" target="_blank" rel="noopener">Go to Website</a>
+      </div>
+    </header>
+
+    <section class="hero" id="intro">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto">
+        <source src="imgvid/8347237-uhd_3840_2160_25fps.mp4" type="video/mp4">
+       
+      </video>
+      <div class="hero-content">
+        <h2>This is an <span>AI Interview Prep Application</span> that helps candidates prepare with precision.</h2>
+        <p id="typingText"></p>
+        <div id="videoNote" class="video-note"></div>
+
+        <div class="hero-cta">
+          <a href="#backend" class="btn">Run Workflow</a>
+        </div>
+      </div>
+
+      
+    </section>
+
+    <section class="logo-strip" aria-label="company logos marquee">
+      <div class="logo-track">
+        <span class="logo-item"><img src="imgvid/icons8-amazon-48.png" alt="Amazon logo"><span>Amazon</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-google-48.png" alt="Google logo"><span>Google</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-microsoft-48.png" alt="Microsoft logo"><span>Microsoft</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-meta-48.png" alt="Meta logo"><span>Meta</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-netflix-48.png" alt="Netflix logo"><span>Netflix</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-adobe-48.png" alt="Adobe logo"><span>Adobe</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-uber-50.png" alt="Uber logo"><span>Uber</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-stripe-48.png" alt="Stripe logo"><span>Stripe</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-shopify-48.png" alt="Shopify logo"><span>Shopify</span></span>
+
+        <span class="logo-item"><img src="imgvid/icons8-amazon-48.png" alt="Amazon logo"><span>Amazon</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-google-48.png" alt="Google logo"><span>Google</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-microsoft-48.png" alt="Microsoft logo"><span>Microsoft</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-meta-48.png" alt="Meta logo"><span>Meta</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-netflix-48.png" alt="Netflix logo"><span>Netflix</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-adobe-48.png" alt="Adobe logo"><span>Adobe</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-uber-50.png" alt="Uber logo"><span>Uber</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-stripe-48.png" alt="Stripe logo"><span>Stripe</span></span>
+        <span class="logo-item"><img src="imgvid/icons8-shopify-48.png" alt="Shopify logo"><span>Shopify</span></span>
+      </div>
+    </section>
+
+    <section class="block" id="backend">
+      <h3>Get Your Top Questions</h3>
+
+      <div class="backend-layout">
+        <div class="panel">
+          <h4>Run Interview Workflow</h4>
+          <form id="workflowForm" class="form-grid">
+            <div class="field">
+              <label for="resume">Resume File *</label>
+              <input id="resume" class="file-input" name="resume" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" required>
+              <label for="resume" class="upload-box">
+                <span class="upload-title">Choose Resume File</span>
+                <span id="resumeName" class="upload-sub">PDF, DOCX, TXT, JPG, JPEG, PNG</span>
+              </label>
+            </div>
+
+            <div class="field">
+              <label for="jd">Job Description File *</label>
+              <input id="jd" class="file-input" name="jd" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" required>
+              <label for="jd" class="upload-box">
+                <span class="upload-title">Choose Job Description File</span>
+                <span id="jdName" class="upload-sub">PDF, DOCX, TXT, JPG, JPEG, PNG</span>
+              </label>
+            </div>
+
+            <div class="field full">
+              <label for="interview_rounds">Interview Rounds *</label>
+              <textarea id="interview_rounds" name="interview_rounds" required>Recruiter Screen; Technical Round 1; Hiring Manager; Behavioral</textarea>
+            </div>
+
+            <div class="field">
+              <label for="answer_length">Answer Length</label>
+              <select id="answer_length" name="answer_length">
+                <option value="answer_small">Small</option>
+                <option value="answer_medium" selected>Medium</option>
+                <option value="answer_large">Large</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="company">Company (Optional)</label>
+              <input id="company" name="company" type="text" placeholder="e.g. Google">
+            </div>
+
+            <div class="field">
+              <label for="role">Role (Optional)</label>
+              <input id="role" name="role" type="text" placeholder="e.g. Data Analyst">
+            </div>
+
+            <div class="field">
+              <label for="to_email">Recipient Email (Optional)</label>
+              <input id="to_email" name="to_email" type="email" placeholder="name@company.com">
+            </div>
+
+            <div class="field full">
+              <label class="check-row">
+                <input id="send_email" name="send_email" type="checkbox">
+                Send generated PDF to recipient email
+              </label>
+            </div>
+
+            <div class="field full actions">
+              <button class="btn" type="submit" id="runBtn">Run Full Workflow</button>
+              <button class="btn-outline" type="button" id="resetBtn">Reset</button>
+              <a class="btn-outline trustpilot-btn" href="https://www.trustpilot.com/review/recruitriders.com" target="_blank" rel="noopener">⭐ Review Us</a>
+            </div>
+          </form>
+
+          <div class="result-box">
+
+            <div class="kv"><b>Candidate:</b><span id="candidateName">-</span></div>
+            <div class="kv"><b>Email Status:</b><span id="emailOut">-</span></div>
+
+            <div class="actions">
+              <button class="btn-outline" type="button" id="openPdfBtn" disabled>Open Generated PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="company">
+      <h3 id="vis">Vision</h3>
+      
+
+      <div class="company-layout">
+        <article class="company-copy">
+         
+          <p>
+           At Recruit riders Technologies Inc ,our mission is to empower IT graduates and job seekers with guidance,tools, and resources they need to thrive 
+           in today's fast changing technology landscape. We speccialize in personalize carrer consultancy,strategic job planning and connecting individuals with 
+           oppurtinites that align with their skills,goals,and evolving demands of the IT industry
+          </p>
+     
+        </article>
+
+        <div class="slideshow" aria-label="company slideshow">
+          <div class="slide-controls">
+            <button class="mini-btn" id="prevBtn">Prev</button>
+            <button class="mini-btn" id="nextBtn">Next</button>
+          </div>
+
+          <div class="slide one active">
+            <div class="slide-content">
+              <h5>Culture & Team Excellence</h5>
+            </div>
+          </div>
+
+          <div class="slide two">
+            <div class="slide-content">
+              <h5>Product Innovation</h5>
+             
+            </div>
+          </div>
+
+          <div class="slide three">
+            <div class="slide-content">
+              <h5>Growth & Brand Story</h5>
+            </div>
+          </div>
+
+          <div class="dots" id="dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+     For your convinient and consistent support Recruit riders are  there for you !
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('workflowForm');
+    const API_BASE_URL = 'http://localhost:8000';
+    const resetBtn = document.getElementById('resetBtn');
+    const runBtn = document.getElementById('runBtn');
+    const heroVideo = document.querySelector('.hero-video');
+    const videoNote = document.getElementById('videoNote');
+    const typingText = document.getElementById('typingText');
+    const statusEl = document.getElementById('status');
+    const candidateNameEl = document.getElementById('candidateName');
+    const emailOutEl = document.getElementById('emailOut');
+    const pageLoader = document.getElementById('pageLoader');
+    const openPdfBtn = document.getElementById('openPdfBtn');
+    const resumeInput = document.getElementById('resume');
+    const jdInput = document.getElementById('jd');
+    const resumeName = document.getElementById('resumeName');
+    const jdName = document.getElementById('jdName');
+    let lastResponse = null;
+    let lastPdfUrl = null;
+
+    function downloadBlob(filename, content, mimeType = 'application/json') {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function setStatus(msg, type = 'warn') {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      statusEl.className = `status ${type}`;
+    }
+
+    function clearResult() {
+      candidateNameEl.textContent = '-';
+      emailOutEl.textContent = '-';
+      lastResponse = null;
+      lastPdfUrl = null;
+      openPdfBtn.disabled = true;
+      setStatus('Idle: fill inputs and click "Run Full Workflow".', 'warn');
+    }
+
+    function bindFileName(inputEl, textEl, fallbackText) {
+      inputEl.addEventListener('change', () => {
+        const file = inputEl.files && inputEl.files[0];
+        textEl.textContent = file ? file.name : fallbackText;
+        if (file) {
+          textEl.classList.add('uploaded');
+        } else {
+          textEl.classList.remove('uploaded');
+        }
+      });
+    }
+
+    function typeHeroText() {
+      const fullText = "Our system takes your Resume and Job Description, understands both deeply, researches the target company, generates practical round-wise interview questions with structured answers, and creates a polished interview prep PDF that you can download or email.";
+      let idx = 0;
+      typingText.textContent = "";
+
+      const timer = setInterval(() => {
+        typingText.textContent += fullText[idx] || "";
+        idx += 1;
+        if (idx >= fullText.length) {
+          clearInterval(timer);
+        }
+      }, 90);
+    }
+
+    if (heroVideo) {
+      heroVideo.addEventListener('error', () => {
+        videoNote.style.display = 'block';
+        videoNote.textContent = "Video blocked by source/CORS in this browser. Fallback image is shown.";
+      });
+
+      heroVideo.addEventListener('stalled', () => {
+        videoNote.style.display = 'block';
+        videoNote.textContent = "Video loading is slow (network/source issue). Fallback image stays visible.";
+      });
+    }
+
+    resetBtn.addEventListener('click', () => {
+      form.reset();
+      clearResult();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const resume = document.getElementById('resume').files[0];
+      const jd = document.getElementById('jd').files[0];
+      if (!resume || !jd) {
+        setStatus('Resume and JD files are required.', 'err');
+        return;
+      }
+
+      const fd = new FormData();
+      fd.append('resume', resume);
+      fd.append('jd', jd);
+      fd.append('interview_rounds', document.getElementById('interview_rounds').value.trim());
+      fd.append('answer_length', document.getElementById('answer_length').value);
+
+      const company = document.getElementById('company').value.trim();
+      const role = document.getElementById('role').value.trim();
+      const toEmail = document.getElementById('to_email').value.trim();
+      const sendEmail = document.getElementById('send_email').checked;
+
+      if (company) fd.append('company', company);
+      if (role) fd.append('role', role);
+      fd.append('send_email', String(sendEmail));
+      if (toEmail) fd.append('to_email', toEmail);
+
+      runBtn.disabled = true;
+      runBtn.textContent = 'Running...';
+      setStatus('Processing workflow through all agents. Please wait...', 'warn');
+      pageLoader.classList.add('active');
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/workflow/run`, { method: 'POST', body: fd });
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data?.detail || data?.message || 'Workflow failed.');
+        }
+
+        setStatus('Workflow completed successfully.', 'ok');
+
+        candidateNameEl.textContent = data.candidate_name || '-';
+        emailOutEl.textContent = data.message || '-';
+
+        if (data.pdf_download_url) {
+          lastPdfUrl = data.pdf_download_url;
+        } else if (data.outputs?.pdf) {
+          lastPdfUrl = data.outputs.pdf;
+        } else {
+          lastPdfUrl = null;
+        }
+        lastResponse = data;
+        openPdfBtn.disabled = !lastPdfUrl;
+      } catch (err) {
+        setStatus(err.message || 'Something went wrong while running workflow.', 'err');
+      } finally {
+        pageLoader.classList.remove('active');
+        runBtn.disabled = false;
+        runBtn.textContent = 'Run Full Workflow';
+      }
+    });
+
+    openPdfBtn.addEventListener('click', () => {
+      if (!lastPdfUrl) return;
+      window.open(lastPdfUrl, '_blank');
+    });
+
+
+    bindFileName(resumeInput, resumeName, 'PDF, DOCX, TXT, JPG, JPEG, PNG');
+    bindFileName(jdInput, jdName, 'PDF, DOCX, TXT, JPG, JPEG, PNG');
+    clearResult();
+    typeHeroText();
+
+    // Slideshow
+    const slideshowEl = document.querySelector('.slideshow');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dotsWrap = document.getElementById('dots');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    let index = 0;
+    let timer;
+
+    function renderDots() {
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        if (i === index) dot.classList.add('active');
+        dot.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    function goTo(i) {
+      slides[index].classList.remove('active');
+      index = (i + slides.length) % slides.length;
+      slides[index].classList.add('active');
+      if (slideshowEl && slides[index]) {
+        const bg = getComputedStyle(slides[index]).backgroundImage;
+        if (bg && bg !== 'none') {
+          slideshowEl.style.backgroundImage = bg;
+          slideshowEl.style.backgroundSize = 'cover';
+          slideshowEl.style.backgroundPosition = 'center';
+        }
+      }
+      renderDots();
+      resetTimer();
+    }
+
+    function next() { goTo(index + 1); }
+    function prev() { goTo(index - 1); }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(next, 4600);
+    }
+
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+
+    if (slides.length) {
+      goTo(0);
+    }
+    renderDots();
+    resetTimer();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+1. Tell me about yourself and your most recent project.
+2. What is your strongest technical skill for this role?
+3. Describe a time you solved a difficult bug.
+4. How do you prioritize tasks when deadlines conflict?
+5. Explain a complex concept you taught to a teammate.
+6. How do you handle code reviews and feedback?
+7. What are your testing strategies for new features?
+8. Describe a time you improved performance or reduced latency.
+9. How do you ensure API reliability and error handling?
+10. What would you do in your first 30 days on this role?
+11. Explain a system you designed end-to-end.
+12. How do you handle ambiguous requirements?
+13. Describe a time you worked cross-functionally.
+14. What is a technical tradeoff you made recently?
+15. How do you keep your skills up to date?
+16. Describe an outage you helped resolve.
+17. How do you estimate tasks and manage scope?
+18. What’s your approach to documentation?
+19. How do you measure success for a project?
+20. Why are you interested in this company?

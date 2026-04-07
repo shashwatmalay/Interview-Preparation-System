@@ -1,0 +1,13 @@
+{
+  "company_name": "unknown",
+  "role_title": null,
+  "overview": "Company name not found in Agent 1 output. Provide a company name override.",
+  "mission_values": [],
+  "products_services": [],
+  "business_model": [],
+  "interview_focus": [],
+  "interview_process": [],
+  "recent_news": [],
+  "sources": [],
+  "notes": "Missing company_name. Pass --company or supply a JD with company name."
+}

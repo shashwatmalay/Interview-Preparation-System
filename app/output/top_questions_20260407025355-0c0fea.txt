@@ -1,0 +1,20 @@
+1. Can you describe your experience architecting a high-scale rule-authoring platform at Amazon? What were the key challenges and how did you address them?
+2. You mentioned engineering a specialized Java library. Can you elaborate on its purpose, the technical challenges involved, and how it achieved a 25-hour reduction in client latency?
+3. How did you achieve an 85% reduction in server-side execution and $30,000 annual infrastructure cost savings through strategic operational caching?
+4. You automated the deployment lifecycle to full CD, saving 260 developer-days annually. What tools and processes did you implement, and what were the main challenges?
+5. Tell me about pioneering a local testing environment. What problem did it solve, and how did it accelerate development velocity and reduce costs?
+6. You designed and delivered event-driven microservices using Java/Spring Boot on AWS. Can you explain the benefits of an event-driven architecture and how you implemented it?
+7. How did you improve system scalability and performance by integrating AWS services like EC2, S3, Lambda, and DynamoDB?
+8. You enhanced system observability by integrating distributed tracing and structured logging. What specific tools did you use, and how did this reduce MTTR?
+9. Describe your experience spearheading DevOps best practices, including the 'test pyramid' and staging canaries, to ensure safe and frequent production deployments.
+10. How do you approach debugging and monitoring applications using AWS CloudWatch Logs, and what specific techniques do you find most effective?
+11. Explain the concept of idempotency in distributed systems and why it's crucial, especially when dealing with retries and event processing.
+12. What is the 'saga pattern' in microservices, and when would you use it over a two-phase commit for managing distributed transactions?
+13. Given your experience with Docker and Kubernetes, how would you containerize a Spring Boot microservice and deploy it to AWS EKS?
+14. You have experience with Terraform. How does Terraform fit into your CI/CD pipeline for managing AWS infrastructure?
+15. How do you ensure data consistency in a distributed system that uses DynamoDB, especially when dealing with eventual consistency?
+16. Describe a challenging bug you encountered in a distributed system and how you debugged and resolved it.
+17. How do you approach designing APIs for microservices, considering aspects like REST/gRPC, JSON/Protobuf, and versioning?
+18. You mentioned using JUnit 5, Mockito, WireMock, and Testcontainers. How do these tools collectively contribute to a robust testing strategy for microservices?
+19. What are the core principles of designing a resilient distributed system, and how have you applied them in your work at Amazon?
+20. Explain the concept of circuit breaking in distributed systems and how you might implement it in a Spring Boot application?
